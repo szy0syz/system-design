@@ -1,6 +1,51 @@
 # 系统架构设计 System-Design 2021
 
+> 4S分析大法 - Scenario，Service，Storage，Scale
+
+![002](./images/002.png)
+
 ## 新鲜事系统（News Feed System）
+
+---
+
+##  用户系统
+
+- 缓存是什么 Cache
+- 缓存和数据库如何配合 Cache & Database
+- 登录系统如何做 Authentication Service
+- 好友关系的存储与查询 Friendship Service
+- 关系型与非关系型数据库的使用场景比较 SQL vs NoSQL
+
+- Scenario 场景
+  - 注册、登录、查询、用户信息修改
+    - 那个需求量最大？
+  - 支持 100M DAU
+  - 注册、登录、信息修改 QPS 约
+    - 100M * 0.1 / 86500 ~ 100
+    - 0.1 = 平均每个用户每天登录+注册+信息修改
+    - Peak = 100 * 3 = 300
+  - 查询的 QPS 约
+    - 100M * 100 / 86400 ~ 100k
+    - 100 = 平均每个用户每天与查询信息相关的操作次数（查看好友，发信息，更新消息主页）
+    - Peak = 100k * 3 = 300k
+
+- Service 服务
+  - 一个 AuthenticationService 负责注册登录
+  - 一个 UserService 负责用户信息存储与查看
+  - 一个 FriendshipService 负责好友关系存储
+
+为什么要分析QPS呢？
+
+因为QPS的大小确定了数据存储系统的选择
+
+常见存储的性能：
+
+- MySQL / PostgreSQL 的 SQL 数据库的性能
+  - 约 1k QPS 这个级别
+- MongoDB / Cassandra 等硬盘型 NoSQL 数据库的性能
+  - 约 10K QPS 这个级别
+- Redis / Memcached 等内存 NoSQL 数据库的性能
+- 以上性能与与机器硬件性能有所区别
 
 ---
 
