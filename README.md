@@ -2,9 +2,9 @@
 
 > 4S分析大法 - Scenario，Service，Storage，Scale
 
-![002](./images/002.png)
-
 ## 01-新鲜事系统（News Feed System）
+
+![002](./images/002.png)
 
 ---
 
