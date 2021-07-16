@@ -172,3 +172,31 @@ Session 会话
 ---
 
 ## 17-评论系统（Comment System）
+
+### Scenario
+
+- 四个功能
+  - 发表文字评论
+  - 显示单一评论
+  - 删除评论
+  - 显示评论列表
+- RPS
+  - Read： 1000RPS
+  - Write：100RPS
+- Latency啊哟球
+  - 读写 p99 latency below 500ms
+  - 为什么不规定Max和Average？
+- Scope
+  - 注意评论区可以有很多个 (我们把评论区叫做`context`)
+  - 不需要设计用户登录系统
+
+### 面试官刁难1：Parameter Location
+
+为什么把 `id` 放在 `URL path` 里，而不是作为一个 `Request Parameter` ？
+
+- 为什么要 `GET /comments/<cid>`
+- 而不是 `GET /comments?id=<cid>`
+
+> 原因：放 url path 里则不需要判空id情况，而 request parameter 则需要，或者还需要重定向！
+>
+> 因为我们本来就要查看一个资源(这里指评论)的详情，所以推荐放 `url path`
